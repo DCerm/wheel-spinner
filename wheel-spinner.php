@@ -26,3 +26,4 @@ add_action('wp_enqueue_scripts', 'func_load_vuescripts');
 //Add shortscode
 add_shortcode( 'officialcorvusaurumwheel', 'func_wheel_spinner' );
 //End of shortcode
+?>
