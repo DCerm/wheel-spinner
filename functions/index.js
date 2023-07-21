@@ -13,6 +13,30 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+ad functions
+//lazy lo
+const functions = require('@google-cloud/functions-framework');
+
+// Always initialized (at cold-start)
+const nonLazyGlobal = fileWideComputation();
+
+// Declared at cold-start, but only initialized if/when the function executes
+let lazyGlobal;
+
+/**
+ * HTTP function that uses lazy-initialized globals
+ *
+ * @param {Object} req request context.
+ * @param {Object} res response context.
+ */
+functions.http('lazyGlobals', (req, res) => {
+  // This value is initialized only if (and when) the function is called
+  lazyGlobal = lazyGlobal || functionSpecificComputation();
+
+  res.send(`Lazy global: ${lazyGlobal}, non-lazy global: ${nonLazyGlobal}`);
+});
+//end of lazyload code
+
 const admin = require('firebase-admin');
 admin.initializeApp();
 
